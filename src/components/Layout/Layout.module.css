@@ -1,0 +1,30 @@
+.layout {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.layout .main {
+    max-width: 1280px;
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 10px;
+    padding-block: 2rem;
+    padding-block-end: 1rem;
+    flex: 1;
+}
+
+.background {
+    z-index: -1;
+    position: absolute;
+    height: 620px;
+    overflow: hidden;
+    opacity: 0.5;
+}
+
+.background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

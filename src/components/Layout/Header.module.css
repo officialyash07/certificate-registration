@@ -1,0 +1,44 @@
+.header {
+    max-width: 1280px;
+    width: 100%;
+    margin-inline: auto;
+    padding-block: 2rem;
+    padding-inline: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    max-width: 150px;
+}
+
+.header nav ul {
+    display: flex;
+    gap: 2rem;
+}
+
+.header a {
+    color: #ffffff;
+    text-decoration: none;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: "Montserrat", sans-serif;
+    padding-block: 10px;
+}
+
+.header nav a {
+    text-transform: uppercase;
+}
+
+.cta a {
+    padding-inline: 1rem;
+    border-radius: 20px;
+    background-color: #6855e0;
+    transition: 0.2s ease-in;
+}
+
+.cta a:hover {
+    box-shadow: 0 0 20px #6855e099;
+}

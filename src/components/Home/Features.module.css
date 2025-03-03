@@ -1,0 +1,32 @@
+.features {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+    margin-block-start: 6rem;
+}
+
+.features h3 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    margin-block-start: 2rem;
+    margin-block-end: 2rem;
+}
+
+.cta a {
+    color: #ffffff;
+    text-decoration: none;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: "Montserrat", sans-serif;
+    text-transform: capitalize;
+    padding-block: 10px;
+    padding-inline: 1rem;
+    border-radius: 20px;
+    background-color: #6855e0;
+    transition: 0.2s ease-in;
+}
+
+.cta a:hover {
+    box-shadow: 0 0 20px #6855e099;
+}

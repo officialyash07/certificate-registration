@@ -1,0 +1,26 @@
+.featureItem {
+    text-align: center;
+    width: 250px;
+}
+
+.icon {
+    display: inline-block;
+    padding: 1rem;
+    background-color: #93b2d3;
+    border-radius: 100%;
+    margin-block-end: 10px;
+}
+
+.featureItem h2 {
+    text-transform: capitalize;
+    color: #93b2d3;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    margin-block-end: 10px;
+}
+
+.featureItem p {
+    color: #cfcfcf;
+    font-family: "Roboto", sans-serif;
+    font-size: 0.9rem;
+}

@@ -1,0 +1,35 @@
+.footer {
+    max-width: 1280px;
+    width: 100%;
+    margin-inline: auto;
+    padding-block: 2rem;
+    padding-inline: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(214, 214, 214, 0.26);
+}
+
+.socialLinks {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.socialLinks svg {
+    fill: #ffffff;
+}
+
+.socialLinks svg {
+    width: 22px;
+    height: 22px;
+    transition: 0.2s ease-in;
+}
+
+.socialLinks svg:hover {
+    fill: #1877f2;
+}
+
+.logo img {
+    max-width: 150px;
+}
