@@ -33,3 +33,22 @@
 .logo img {
     max-width: 150px;
 }
+
+@media (max-width: 600px) {
+    .footer {
+        flex-direction: column;
+        align-items: center;
+        padding-block: 1rem;
+    }
+
+    .socialLinks {
+        margin-block-start: 1rem;
+    }
+}
+
+@media (max-width: 390px) {
+    .socialLinks {
+        flex-direction: column;
+        align-items: center;
+    }
+}
