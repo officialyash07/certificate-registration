@@ -1,0 +1,80 @@
+.loginForm {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 2rem;
+    padding-inline: 3rem;
+}
+
+.loginForm h1 {
+    font-weight: 500;
+    margin-block-end: 2rem;
+}
+
+.loginForm div {
+    position: relative;
+}
+
+.loginForm div img {
+    position: absolute;
+    top: 8px;
+}
+
+.loginForm div .eye {
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+.loginForm div .eye img {
+    right: 0;
+    top: 10px;
+}
+
+.loginForm input {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #00000052;
+    width: 100%;
+    padding-block: 0.3rem;
+    padding-inline-start: 2rem;
+    margin-block-end: 2rem;
+}
+
+.loginForm input:focus {
+    border-bottom: 1px solid #000000;
+}
+
+.loginForm .forgotPass {
+    text-align: right;
+    margin-block-end: 1rem;
+    position: relative;
+    bottom: 1rem;
+}
+
+.loginForm .forgotPass a {
+    color: #0000008f;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-style: italic;
+    text-decoration-line: line-through;
+}
+
+.loginBtn {
+    margin-block-end: 1rem;
+}
+
+.loginForm .noAccount {
+    text-align: right;
+    font-size: 0.8rem;
+    color: #0000008f;
+}
+
+.loginForm .noAccount a {
+    color: #000000;
+}
+
+@media (max-width: 390px) {
+    .loginForm {
+        padding-inline: 1rem;
+    }
+}

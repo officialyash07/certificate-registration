@@ -29,7 +29,7 @@ const Features = () => {
             <div>
                 <h3>Welcome to Certificado Registro</h3>
                 <div className={classes.cta}>
-                    <Link>get started</Link>
+                    <Link to="/auth?mode=signup">get started</Link>
                 </div>
             </div>
         </section>

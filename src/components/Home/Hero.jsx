@@ -14,7 +14,7 @@ const Hero = () => {
                     access anytime, anywhere
                 </h3>
                 <div className={classes.cta}>
-                    <Link>get started</Link>
+                    <Link to="/auth?mode=signup">get started</Link>
                 </div>
             </div>
             <div className={classes.heroImg}>

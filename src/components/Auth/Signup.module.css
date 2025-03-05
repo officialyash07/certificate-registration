@@ -1,0 +1,60 @@
+.signupForm {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 2rem;
+    padding-inline: 3rem;
+}
+
+.signupForm h1 {
+    font-weight: 500;
+    margin-block-end: 2rem;
+}
+
+.signupForm div {
+    position: relative;
+}
+
+.signupForm div .eye {
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+.signupForm div .eye img {
+    position: absolute;
+    right: 0;
+    top: 2.5rem;
+}
+
+.signupForm input {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #00000052;
+    width: 100%;
+    padding-block: 0.3rem;
+    margin-block-end: 2rem;
+}
+
+.signupForm input:focus {
+    border-bottom: 1px solid #000000;
+}
+
+.signupBtn {
+    margin-block-end: 1rem;
+}
+
+.signupForm .existAccount {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #0000008f;
+}
+
+.signupForm .existAccount a {
+    color: #000000;
+}
+
+@media (max-width: 390px) {
+    .signupForm {
+        padding-inline: 1rem;
+    }
+}

@@ -30,7 +30,6 @@ const Header = () => {
                             }
                             to="/"
                             end
-                            onClick={handleToggleMenu}
                         >
                             home
                         </NavLink>
@@ -41,7 +40,6 @@ const Header = () => {
                                 isActive ? classes.active : ""
                             }
                             to="/about"
-                            onClick={handleToggleMenu}
                         >
                             about
                         </NavLink>
@@ -52,22 +50,19 @@ const Header = () => {
                                 isActive ? classes.active : ""
                             }
                             to="/contact"
-                            onClick={handleToggleMenu}
                         >
                             contact
                         </NavLink>
                     </li>
                     <li className={classes.conditionLink}>
                         <div className={classes.navcta}>
-                            <Link to="/login" onClick={handleToggleMenu}>
-                                LogIn
-                            </Link>
+                            <Link to="/auth?mode=login">LogIn</Link>
                         </div>
                     </li>
                 </ul>
             </nav>
             <div className={classes.cta}>
-                <Link to="/login">LogIn</Link>
+                <Link to="/auth?mode=login">LogIn</Link>
             </div>
             {isNavOpen && (
                 <div
