@@ -27,7 +27,7 @@ const Login = () => {
                     type="email"
                     name=""
                     id="name"
-                    placeholder="Email"
+                    placeholder="Email *"
                     required
                 />
             </div>
@@ -37,7 +37,7 @@ const Login = () => {
                     type={isPasswordVisible ? "text" : "password"}
                     name=""
                     id="password"
-                    placeholder="Password"
+                    placeholder="Password *"
                     required
                 />
                 <button

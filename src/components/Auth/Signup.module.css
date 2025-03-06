@@ -26,6 +26,14 @@
     top: 2.5rem;
 }
 
+.signupForm label {
+    font-size: 0.9rem;
+}
+
+.signupForm label span {
+    color: #ff0000;
+}
+
 .signupForm input {
     border: none;
     outline: none;
@@ -37,6 +45,22 @@
 
 .signupForm input:focus {
     border-bottom: 1px solid #000000;
+}
+
+.passConstraint {
+    margin-block-end: 1rem;
+}
+
+.passConstraint h2 {
+    font-weight: 500;
+    font-size: 1rem;
+    margin-block-end: 4px;
+}
+
+.passConstraint p {
+    color: #333333;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
 }
 
 .signupBtn {
@@ -53,8 +77,58 @@
     color: #000000;
 }
 
+.verificationForm {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 2rem;
+    padding-inline: 3rem;
+}
+
+.verificationForm h1 {
+    font-weight: 500;
+    margin-block-end: 2rem;
+}
+
+.verificationForm p {
+    font-size: 0.9rem;
+    margin-block-end: 1.5rem;
+    color: #333333;
+}
+
+.verificationForm input {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #00000052;
+    width: 100%;
+    padding-block: 0.3rem;
+    margin-block-end: 2rem;
+}
+
+.verificationForm input::-webkit-outer-spin-button,
+.verificationForm input::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
+.verificationForm input:focus {
+    border-bottom: 1px solid #000000;
+}
+
+.resendBtn,
+.confirmBtn {
+    text-transform: uppercase;
+}
+
+.resendBtn {
+    margin-block-end: 1rem;
+    background-color: #36c595;
+}
+
 @media (max-width: 390px) {
-    .signupForm {
+    .signupForm,
+    .verificationForm {
         padding-inline: 1rem;
     }
 }

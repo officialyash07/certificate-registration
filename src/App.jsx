@@ -7,6 +7,10 @@ import ContactPage from "./pages/Contact/ContactPage";
 import AuthPage from "./pages/Auth/AuthPage";
 import DashboardPage from "./pages/Dashboard/DashboardPage";
 
+import awsConfig from "./amplify-auth/aws-exports";
+
+import { Amplify } from "aws-amplify";
+
 const router = createBrowserRouter([
     {
         path: "/",
@@ -20,6 +24,8 @@ const router = createBrowserRouter([
         ],
     },
 ]);
+
+Amplify.configure(awsConfig);
 
 function App() {
     return <RouterProvider router={router} />;
