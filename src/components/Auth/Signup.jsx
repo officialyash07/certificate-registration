@@ -18,6 +18,8 @@ import {
     resendSignUpCode,
 } from "aws-amplify/auth";
 
+import { ClipLoader } from "react-spinners";
+
 const Signup = () => {
     const [isVisible, setIsVisible] = useState({
         password: false,
@@ -32,6 +34,7 @@ const Signup = () => {
     const [uiError, setUiError] = useState(false);
     const [errorMessage, setErrorMessage] = useState();
     const [maskedEmail, setMaskedEmail] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
 
@@ -73,6 +76,8 @@ const Signup = () => {
 
         if (!validateForm()) return;
 
+        setIsLoading(true);
+
         const emailMask = maskEmail(email);
         setMaskedEmail(emailMask);
 
@@ -89,6 +94,8 @@ const Signup = () => {
             setUiError(true);
             setErrorMessage(error.message);
             console.error("Error signing up user: ", error.message);
+        } finally {
+            setIsLoading(false);
         }
 
         // Clear form inputs
@@ -111,6 +118,8 @@ const Signup = () => {
 
         if (!validateForm()) return;
 
+        setIsLoading(true);
+
         try {
             await amplifyConfirmSignUp({
                 username: email,
@@ -122,10 +131,13 @@ const Signup = () => {
             setUiError(true);
             setErrorMessage(error.message);
             console.error("Error signing up user: ", error.message);
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const handleResendCode = async () => {
+        setIsLoading(true);
         try {
             await resendSignUpCode({ username: email });
             alert("Verification code has been resent.");
@@ -232,7 +244,11 @@ const Signup = () => {
                         <p>Minimum 8 characters</p>
                     </div>
                     <Button type="submit" className={classes.signupBtn}>
-                        Create Account
+                        {isLoading ? (
+                            <ClipLoader color="#ffffff" size={13} />
+                        ) : (
+                            "Create Account"
+                        )}
                     </Button>
                     <p className={classes.existAccount}>
                         Already have an account?{" "}
@@ -275,7 +291,11 @@ const Signup = () => {
                         resend
                     </Button>
                     <Button className={classes.confirmBtn} type="submit">
-                        confirm
+                        {isLoading ? (
+                            <ClipLoader color="#ffffff" size={13} />
+                        ) : (
+                            "confirm"
+                        )}
                     </Button>
                 </form>
             )}

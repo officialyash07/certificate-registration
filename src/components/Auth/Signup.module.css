@@ -126,7 +126,8 @@
     background-color: #36c595;
 }
 
-.error {
+.error,
+.verificationForm .error {
     color: #ff0000;
     font-size: 0.7rem;
     letter-spacing: 0.5px;
