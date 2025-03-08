@@ -243,7 +243,11 @@ const Signup = () => {
                         <p>Contains at least 1 uppercase letter</p>
                         <p>Minimum 8 characters</p>
                     </div>
-                    <Button type="submit" className={classes.signupBtn}>
+                    <Button
+                        type="submit"
+                        className={classes.signupBtn}
+                        disabled={isLoading}
+                    >
                         {isLoading ? (
                             <ClipLoader color="#ffffff" size={13} />
                         ) : (
