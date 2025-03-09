@@ -43,6 +43,25 @@
     box-shadow: 0 0 20px #6855e099;
 }
 
+.cta button {
+    border: none;
+    outline: none;
+    padding-inline: 1rem;
+    padding-block: 10px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: "Montserrat", sans-serif;
+    background-color: #6855e0;
+    color: #ffffff;
+    transition: 0.2s ease-in;
+}
+
+.cta button:hover {
+    box-shadow: 0 0 20px #4f3bce99;
+}
+
 .header nav ul a:hover {
     color: #c2b27d;
     transition: 0.2s ease-in;
@@ -81,6 +100,25 @@
 .header nav ul .navcta a:hover {
     box-shadow: 0 0 20px #6855e099;
     color: #ffffff;
+}
+
+.header nav ul .navcta button {
+    border: none;
+    outline: none;
+    padding-inline: 1rem;
+    padding-block: 7px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: "Montserrat", sans-serif;
+    background-color: #6855e0;
+    color: #ffffff;
+    transition: 0.2s ease-in;
+}
+
+.header nav ul .navcta button:hover {
+    box-shadow: 0 0 20px #6855e099;
 }
 
 @media (max-width: 600px) {

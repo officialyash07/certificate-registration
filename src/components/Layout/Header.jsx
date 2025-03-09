@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import logoImg from "../../assets/logo.png";
 import classes from "./Header.module.css";
 
@@ -7,8 +7,13 @@ import { Link, NavLink } from "react-router";
 import menuIcon from "../../assets/icons/menu.svg";
 import closeIcon from "../../assets/icons/close.svg";
 
+import { useContext } from "react";
+import AuthContext from "../../context/AuthContext";
+
 const Header = () => {
     const [isNavOpen, setIsNavOpen] = useState(false);
+
+    const { isAuthenticated, logOut } = useContext(AuthContext);
 
     const handleToggleMenu = () => {
         setIsNavOpen((prevState) => !prevState);
@@ -56,13 +61,21 @@ const Header = () => {
                     </li>
                     <li className={classes.conditionLink}>
                         <div className={classes.navcta}>
-                            <Link to="/auth?mode=login">LogIn</Link>
+                            {isAuthenticated ? (
+                                <button onClick={logOut}>Signout</button>
+                            ) : (
+                                <Link to="/auth?mode=login">LogIn</Link>
+                            )}
                         </div>
                     </li>
                 </ul>
             </nav>
             <div className={classes.cta}>
-                <Link to="/auth?mode=login">LogIn</Link>
+                {isAuthenticated ? (
+                    <button onClick={logOut}>Signout</button>
+                ) : (
+                    <Link to="/auth?mode=login">LogIn</Link>
+                )}
             </div>
             {isNavOpen && (
                 <div

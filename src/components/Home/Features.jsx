@@ -8,7 +8,13 @@ import recordsImg from "../../assets/icons/records.svg";
 
 import { Link } from "react-router";
 
+import { useContext } from "react";
+
+import AuthContext from "../../context/AuthContext";
+
 const Features = () => {
+    const { isAuthenticated } = useContext(AuthContext);
+
     return (
         <section className={classes.features}>
             <FeatureItem
@@ -26,12 +32,15 @@ const Features = () => {
                 title="organized record keeping"
                 description="Stay organized with a streamlined dashboard for all your certifications"
             />
-            <div>
-                <h3>Welcome to Certificado Registro</h3>
-                <div className={classes.cta}>
-                    <Link to="/auth?mode=signup">get started</Link>
+            {!isAuthenticated && (
+                <div>
+                    <h3>Welcome to Certificado Registro</h3>
+
+                    <div className={classes.cta}>
+                        <Link to="/auth?mode=signup">get started</Link>
+                    </div>
                 </div>
-            </div>
+            )}
         </section>
     );
 };

@@ -18,6 +18,10 @@ import { ClipLoader } from "react-spinners";
 
 import { useNavigate } from "react-router";
 
+import { useContext } from "react";
+
+import AuthContext from "../../context/AuthContext";
+
 const Login = () => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [email, setEmail] = useState("");
@@ -26,6 +30,8 @@ const Login = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [isUiError, setIsUiError] = useState(false);
+
+    const { setIsAuthenticated } = useContext(AuthContext);
 
     const navigate = useNavigate();
 
@@ -54,10 +60,11 @@ const Login = () => {
         setIsLoading(true);
 
         try {
-            await amplifySignIn({
+            const userData = await amplifySignIn({
                 username: email,
                 password,
             });
+            setIsAuthenticated(userData);
             alert("Login successful!");
             navigate("/dashboard");
         } catch (error) {
