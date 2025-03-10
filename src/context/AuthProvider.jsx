@@ -14,7 +14,9 @@ const AuthProvider = ({ children }) => {
         const fetchUser = async () => {
             try {
                 const currentUser = await getCurrentUser();
+
                 setIsAuthenticated(currentUser);
+
                 // eslint-disable-next-line no-unused-vars
             } catch (error) {
                 // console.error("Error fetching user:", error);
@@ -31,18 +33,24 @@ const AuthProvider = ({ children }) => {
         try {
             await signOut();
             setIsAuthenticated(null);
+
             window.location.href = "/auth?mode=login";
         } catch (error) {
             console.error("Error signing out:", error);
         }
     };
+
     if (isLoading) {
         return <ClipLoader size={100} color={"#ffffff"} />;
     }
 
     return (
         <AuthContext.Provider
-            value={{ isAuthenticated, setIsAuthenticated, logOut: logOutUser }}
+            value={{
+                isAuthenticated,
+                setIsAuthenticated,
+                logOut: logOutUser,
+            }}
         >
             {children}
         </AuthContext.Provider>

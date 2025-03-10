@@ -27,6 +27,7 @@ const Signup = () => {
     });
     const [step, setStep] = useState("signup");
     const [errors, setErrors] = useState({});
+    const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -59,6 +60,10 @@ const Signup = () => {
         const validateForm = () => {
             const newErrors = {};
 
+            if (inputIsInvalid(fullName)) {
+                newErrors.fullName = "Please enter your full name.";
+            }
+
             if (inputIsInvalid(email) || !email.includes("@")) {
                 newErrors.email = "Please enter a valid email address.";
             }
@@ -88,7 +93,13 @@ const Signup = () => {
                 attributes: {
                     email,
                 },
+                options: {
+                    userAttributes: {
+                        "custom:fullName": fullName,
+                    },
+                },
             });
+
             setStep("confirm");
         } catch (error) {
             setUiError(true);
@@ -152,6 +163,22 @@ const Signup = () => {
             {step === "signup" && (
                 <form className={classes.signupForm} onSubmit={handleSignUp}>
                     <h1>Sign up</h1>
+                    <div>
+                        <label htmlFor="fullName">
+                            Full Name <span>*</span>
+                        </label>
+                        <input
+                            type="text"
+                            id="fullName"
+                            placeholder="John Wick"
+                            value={fullName}
+                            onChange={(event) =>
+                                setFullName(event.target.value)
+                            }
+                            required
+                        />
+                    </div>
+
                     <div>
                         <label htmlFor="email">
                             Email Address <span>*</span>

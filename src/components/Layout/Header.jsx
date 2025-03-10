@@ -28,17 +28,32 @@ const Header = () => {
             </div>
             <nav className={isNavOpen ? classes.show : classes.hide}>
                 <ul>
-                    <li>
-                        <NavLink
-                            className={({ isActive }) =>
-                                isActive ? classes.active : ""
-                            }
-                            to="/"
-                            end
-                        >
-                            home
-                        </NavLink>
-                    </li>
+                    {!isAuthenticated ? (
+                        <li>
+                            <NavLink
+                                className={({ isActive }) =>
+                                    isActive ? classes.active : ""
+                                }
+                                to="/"
+                                end
+                            >
+                                home
+                            </NavLink>
+                        </li>
+                    ) : (
+                        <li>
+                            <NavLink
+                                className={({ isActive }) =>
+                                    isActive ? classes.active : ""
+                                }
+                                to="/dashboard"
+                                end
+                            >
+                                dashboard
+                            </NavLink>
+                        </li>
+                    )}
+
                     <li>
                         <NavLink
                             className={({ isActive }) =>
