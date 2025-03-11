@@ -18,7 +18,7 @@ import { ClipLoader } from "react-spinners";
 
 import { useNavigate } from "react-router";
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import AuthContext from "../../context/AuthContext";
 
@@ -31,9 +31,15 @@ const Login = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isUiError, setIsUiError] = useState(false);
 
-    const { setIsAuthenticated } = useContext(AuthContext);
+    const { setIsAuthenticated, isAuthenticated } = useContext(AuthContext);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate("/dashboard");
+        }
+    }, [isAuthenticated, navigate]);
 
     const handleTogglePassword = () => {
         setIsPasswordVisible((prevState) => !prevState);
@@ -65,7 +71,7 @@ const Login = () => {
                 password,
             });
             setIsAuthenticated(userData);
-            alert("Login successful!");
+            console.log(userData);
             navigate("/dashboard");
         } catch (error) {
             setIsUiError(true);

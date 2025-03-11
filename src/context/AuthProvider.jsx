@@ -14,13 +14,12 @@ const AuthProvider = ({ children }) => {
         const fetchUser = async () => {
             try {
                 const currentUser = await getCurrentUser();
-
                 setIsAuthenticated(currentUser);
 
                 // eslint-disable-next-line no-unused-vars
             } catch (error) {
                 // console.error("Error fetching user:", error);
-                setIsAuthenticated(null);
+                setIsAuthenticated(false);
             } finally {
                 setIsLoading(false);
             }

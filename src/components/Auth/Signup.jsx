@@ -136,7 +136,6 @@ const Signup = () => {
                 username: email,
                 confirmationCode: code,
             });
-            alert("Signup successful! You can now log in.");
             navigate("/auth?mode=login");
         } catch (error) {
             setUiError(true);

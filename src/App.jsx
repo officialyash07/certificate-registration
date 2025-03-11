@@ -33,40 +33,7 @@ const router = createBrowserRouter([
 
 Amplify.configure(awsConfig);
 
-// const autoLogoutTime = 30 * 60 * 1000;
-
 function App() {
-    // Automatically sign out after inactivity using AWS Amplify's signOut method
-    // useEffect(() => {
-    //     let timeout;
-
-    //     const resetTimer = () => {
-    //         clearTimeout(timeout);
-    //         timeout = setTimeout(async () => {
-    //             try {
-    //                 await signOut();
-    //                 alert(
-    //                     "Session expired due to inactivity. Please login again."
-    //                 );
-    //                 window.location.href = "/auth?mode=login";
-    //             } catch (error) {
-    //                 alert("Failed to sign out", error.message);
-    //             }
-    //         }, autoLogoutTime);
-    //     };
-
-    //     window.addEventListener("mousemove", resetTimer);
-    //     window.addEventListener("keydown", resetTimer);
-
-    //     resetTimer();
-
-    //     return () => {
-    //         window.removeEventListener("mousemove", resetTimer);
-    //         window.removeEventListener("keydown", resetTimer);
-    //         clearTimeout(timeout);
-    //     };
-    // }, []);
-
     return (
         <AuthProvider>
             <RouterProvider router={router} />
