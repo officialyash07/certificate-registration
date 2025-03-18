@@ -1,36 +1,119 @@
-import { useEffect, useState, useContext } from "react";
+import { useContext, useState, useEffect, useCallback } from "react";
 import AuthContext from "../../context/AuthContext";
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { fromCognitoIdentityPool } from "@aws-sdk/credential-providers";
-import { CognitoIdentityClient } from "@aws-sdk/client-cognito-identity";
 import {
-    DynamoDBClient,
-    PutItemCommand,
+    DynamoDBDocumentClient,
     QueryCommand,
-} from "@aws-sdk/client-dynamodb";
+    PutCommand,
+} from "@aws-sdk/lib-dynamodb";
+import { fetchUserAttributes, fetchAuthSession } from "aws-amplify/auth";
+import { ClipLoader } from "react-spinners";
 
-const REGION = import.meta.env.VITE_REGION;
-const IDENTITY_POOL_ID = import.meta.env.VITE_IDENTITY_POOL_ID;
-const USER_POOL_ID = import.meta.env.VITE_USER_POOL_ID;
-const TABLE_NAME = import.meta.env.VITE_DYNAMODB_TABLE;
+const region = import.meta.env.VITE_REGION;
+const identityPoolId = import.meta.env.VITE_IDENTITY_POOL_ID;
+const userPoolId = import.meta.env.VITE_USER_POOL_ID;
+const table = import.meta.env.VITE_DYNAMODB_TABLE;
 
-// Identity Pool Initialization
-const identityClient = new CognitoIdentityClient({ region: REGION });
+let client, docClient;
+
+const initializeDynamoDB = async (idToken) => {
+    client = new DynamoDBClient({
+        region,
+        credentials: fromCognitoIdentityPool({
+            clientConfig: { region },
+            identityPoolId,
+            logins: {
+                [`cognito-idp.${region}.amazonaws.com/${userPoolId}`]: idToken,
+            },
+        }),
+    });
+    docClient = DynamoDBDocumentClient.from(client);
+    console.log(docClient);
+};
 
 const DashboardPage = () => {
-    const { isAuthenticated } = useContext(AuthContext);
+    const { isAuthenticated, userData } = useContext(AuthContext);
+    const employeeId = userData?.userId;
+    const [isLoading, setIsLoading] = useState(true);
+    const [employeeName, setEmployeeName] = useState("");
+    const [certifications, setCertifications] = useState([]);
+    const [formData, setFormData] = useState({
+        certificationId: "",
+        csp: "",
+        certificationLevel: "",
+        certificationName: "",
+        dateOfCertification: "",
+        expiryOfCertification: "",
+        validity: "",
+    });
 
-    // If not authenticated, dashboard page is not accessible
     useEffect(() => {
-        if (!isAuthenticated) {
-            window.location.href = "/auth?mode=login";
+        const fetchName = async () => {
+            try {
+                const attributes = await fetchUserAttributes();
+                setEmployeeName(attributes["custom:fullName"]);
+            } catch (error) {
+                console.error("Error fetching user attributes: ", error);
+            }
+        };
+
+        const fetchSession = async () => {
+            try {
+                const session = await fetchAuthSession();
+                console.log(session);
+                const token = session.tokens.idToken.toString();
+                if (token) {
+                    await initializeDynamoDB(token);
+                    setIsLoading(false);
+                }
+            } catch (error) {
+                console.error("Error fetching auth session: ", error);
+                setIsLoading(false);
+            }
+        };
+
+        const fetchCertifications = async () => {
+            if (!docClient) {
+                console.error("DynamoDB client not initialized");
+                return;
+            }
+
+            try {
+                const command = new QueryCommand({
+                    TableName: table,
+                    KeyConditionExpression: "employeeId = :employeeId",
+                    ExpressionAttributeValues: {
+                        ":employeeId": employeeId,
+                    },
+                });
+                const { Items } = await docClient.send(command);
+                setCertifications(Items || []);
+            } catch (error) {
+                console.error("Error fetching certifications: ", error);
+            }
+        };
+
+        fetchName();
+        fetchSession();
+        if (docClient && !isLoading) {
+            fetchCertifications();
         }
-    }, [isAuthenticated]);
+    }, [employeeId, isLoading]);
 
     return (
         <div>
-            <h1>Welcome, </h1>
+            {employeeName ? (
+                <h1>
+                    Welcome, <span>{employeeName}</span>
+                </h1>
+            ) : (
+                <ClipLoader color="#ffffff" size={13} />
+            )}
             <h2>Your Certifications</h2>
-
+            {/* display certifications if exists, otherwise display no
+            certifications */}
+            {/* a button to display certificate form, initially it is hidden */}
             <h2>Add Certification</h2>
             <form>
                 <input type="text" placeholder="Certification ID" required />

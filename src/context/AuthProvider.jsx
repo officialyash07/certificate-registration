@@ -7,14 +7,16 @@ import { ClipLoader } from "react-spinners";
 import AuthContext from "./AuthContext";
 
 const AuthProvider = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(null);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [userData, setUserData] = useState(null);
 
     useEffect(() => {
         const fetchUser = async () => {
             try {
                 const currentUser = await getCurrentUser();
-                setIsAuthenticated(currentUser);
+                setIsAuthenticated(true);
+                setUserData(currentUser);
 
                 // eslint-disable-next-line no-unused-vars
             } catch (error) {
@@ -31,7 +33,7 @@ const AuthProvider = ({ children }) => {
     const logOutUser = async () => {
         try {
             await signOut();
-            setIsAuthenticated(null);
+            setIsAuthenticated(false);
 
             window.location.href = "/auth?mode=login";
         } catch (error) {
@@ -46,6 +48,8 @@ const AuthProvider = ({ children }) => {
     return (
         <AuthContext.Provider
             value={{
+                userData,
+                setUserData,
                 isAuthenticated,
                 setIsAuthenticated,
                 logOut: logOutUser,

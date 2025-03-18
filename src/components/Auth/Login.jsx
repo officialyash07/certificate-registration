@@ -12,7 +12,7 @@ import closeEyeIcon from "../../assets/icons/eye-close.svg";
 import Button from "../../ui/Button";
 import { inputIsInvalid } from "../../utils/input-validator";
 
-import { signIn as amplifySignIn } from "aws-amplify/auth";
+import { signIn as amplifySignIn, getCurrentUser } from "aws-amplify/auth";
 
 import { ClipLoader } from "react-spinners";
 
@@ -31,7 +31,8 @@ const Login = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isUiError, setIsUiError] = useState(false);
 
-    const { setIsAuthenticated, isAuthenticated } = useContext(AuthContext);
+    const { isAuthenticated, setUserData, setIsAuthenticated } =
+        useContext(AuthContext);
 
     const navigate = useNavigate();
 
@@ -66,13 +67,13 @@ const Login = () => {
         setIsLoading(true);
 
         try {
-            const userData = await amplifySignIn({
+            await amplifySignIn({
                 username: email,
                 password,
             });
-            setIsAuthenticated(userData);
-            console.log(userData);
-            navigate("/dashboard");
+            const user = await getCurrentUser();
+            setIsAuthenticated(true);
+            setUserData(user);
         } catch (error) {
             setIsUiError(true);
             setErrorMessage(error.message);

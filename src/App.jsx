@@ -6,16 +6,13 @@ import AboutPage from "./pages/About/AboutPage";
 import ContactPage from "./pages/Contact/ContactPage";
 import AuthPage from "./pages/Auth/AuthPage";
 import DashboardPage from "./pages/Dashboard/DashboardPage";
+import ProtectedRoute from "./components/Auth/ProtectedRoute";
 
 import awsConfig from "./amplify-auth/aws-exports";
 
 import { Amplify } from "aws-amplify";
 
 import AuthProvider from "./context/AuthProvider";
-
-// import { signOut } from "aws-amplify/auth";
-
-// import { useEffect } from "react";
 
 const router = createBrowserRouter([
     {
@@ -26,7 +23,14 @@ const router = createBrowserRouter([
             { path: "about", element: <AboutPage /> },
             { path: "contact", element: <ContactPage /> },
             { path: "auth", element: <AuthPage /> },
-            { path: "dashboard", element: <DashboardPage /> },
+            {
+                path: "dashboard",
+                element: (
+                    <ProtectedRoute>
+                        <DashboardPage />
+                    </ProtectedRoute>
+                ),
+            },
         ],
     },
 ]);
