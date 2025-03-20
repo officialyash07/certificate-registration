@@ -29,77 +29,75 @@ const initializeDynamoDB = async (idToken) => {
         }),
     });
     docClient = DynamoDBDocumentClient.from(client);
-    console.log(docClient);
 };
 
 const DashboardPage = () => {
-    const { isAuthenticated, userData } = useContext(AuthContext);
+    const { userData } = useContext(AuthContext);
     const employeeId = userData?.userId;
     const [isLoading, setIsLoading] = useState(true);
     const [employeeName, setEmployeeName] = useState("");
     const [certifications, setCertifications] = useState([]);
     const [formData, setFormData] = useState({
-        certificationId: "",
+        certificateId: "",
         csp: "",
-        certificationLevel: "",
-        certificationName: "",
-        dateOfCertification: "",
-        expiryOfCertification: "",
+        certificateLevel: "",
+        certificateName: "",
+        dateOfCertificate: "",
+        expiryOfCertificate: "",
         validity: "",
     });
 
     useEffect(() => {
-        const fetchName = async () => {
-            try {
-                const attributes = await fetchUserAttributes();
-                setEmployeeName(attributes["custom:fullName"]);
-            } catch (error) {
-                console.error("Error fetching user attributes: ", error);
-            }
+        const initialize = async () => {
+            await fetchName();
+            await fetchSession();
         };
+        initialize();
+    }, []);
 
-        const fetchSession = async () => {
-            try {
-                const session = await fetchAuthSession();
-                console.log(session);
-                const token = session.tokens.idToken.toString();
-                if (token) {
-                    await initializeDynamoDB(token);
-                    setIsLoading(false);
-                }
-            } catch (error) {
-                console.error("Error fetching auth session: ", error);
-                setIsLoading(false);
-            }
-        };
-
-        const fetchCertifications = async () => {
-            if (!docClient) {
-                console.error("DynamoDB client not initialized");
-                return;
-            }
-
-            try {
-                const command = new QueryCommand({
-                    TableName: table,
-                    KeyConditionExpression: "employeeId = :employeeId",
-                    ExpressionAttributeValues: {
-                        ":employeeId": employeeId,
-                    },
-                });
-                const { Items } = await docClient.send(command);
-                setCertifications(Items || []);
-            } catch (error) {
-                console.error("Error fetching certifications: ", error);
-            }
-        };
-
-        fetchName();
-        fetchSession();
-        if (docClient && !isLoading) {
-            fetchCertifications();
+    const fetchName = async () => {
+        try {
+            const attributes = await fetchUserAttributes();
+            setEmployeeName(attributes["custom:fullName"]);
+        } catch (error) {
+            console.error("Error fetching user attributes: ", error);
         }
-    }, [employeeId, isLoading]);
+    };
+
+    const fetchSession = async () => {
+        try {
+            const session = await fetchAuthSession();
+            const idToken = session.tokens.idToken.toString();
+            await initializeDynamoDB(idToken);
+            console.log(docClient);
+            setIsLoading(false);
+            fetchCertification();
+        } catch (error) {
+            console.error("Error fetching auth session: ", error);
+        }
+    };
+
+    const fetchCertification = useCallback(async () => {
+        if (!docClient || !employeeId) {
+            console.log("doc client not initialised.");
+            return;
+        }
+
+        try {
+            const command = new QueryCommand({
+                TableName: table,
+                KeyConditionExpression: "employeeId=:employeeId",
+                ExpressionAttributeValues: {
+                    ":employeeId": employeeId,
+                },
+            });
+
+            const { Items } = await docClient.send(command);
+            setCertifications(Items);
+        } catch (error) {
+            console.error("Error fetching certifications: ", error);
+        }
+    }, [employeeId]);
 
     return (
         <div>
@@ -111,8 +109,9 @@ const DashboardPage = () => {
                 <ClipLoader color="#ffffff" size={13} />
             )}
             <h2>Your Certifications</h2>
-            {/* display certifications if exists, otherwise display no
-            certifications */}
+            {certifications.length === 0 && (
+                <p>No certifications yet. Please register certificate.</p>
+            )}
             {/* a button to display certificate form, initially it is hidden */}
             <h2>Add Certification</h2>
             <form>
