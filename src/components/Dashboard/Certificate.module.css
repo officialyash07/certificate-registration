@@ -1,0 +1,8 @@
+@media (max-width: 768px) {
+    .certificate td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        flex-basis: 50%;
+        color: #e4e297;
+    }
+}
